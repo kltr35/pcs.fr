@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCS - Connexion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #FAFAFA;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFFFFF;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #E94B6D;
+            text-decoration: none;
+        }
+
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .lang-flag {
+            width: 20px;
+            height: 14px;
+            margin-left: 0.5rem;
+        }
+
+        .lang-text {
+            color: #E94B6D;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid #E0E0E0;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #FFFFFF;
+            color: #666;
+        }
+
+        input[type="text"]::placeholder {
+            color: #CCC;
+            font-weight: 300;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #E94B6D;
+            box-shadow: 0 0 0 3px rgba(233, 75, 109, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #E94B6D 0%, #F06584 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 15px rgba(233, 75, 109, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(233, 75, 109, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #FFFFFF;
+            color: #E94B6D;
+            border: 2px solid #E94B6D;
+        }
+
+        .btn-secondary:hover {
+            background: #FFF5F7;
+            box-shadow: 0 4px 15px rgba(233, 75, 109, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        .forgot-link {
+            display: block;
+            margin-top: 1.5rem;
+            color: #E94B6D;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-link:hover {
+            color: #D13A5A;
+            text-decoration: underline;
+        }
+
+        .footer {
+            padding: 2rem;
+            text-align: center;
+            background: #FFFFFF;
+            border-top: 1px solid #F0F0F0;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+        }
+
+        .footer-links a {
+            color: #E94B6D;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #D13A5A;
+            text-decoration: underline;
+        }
+
+        .footer-links span {
+            color: #CCC;
+        }
+
+        /* PIN Step Styles */
+        .step-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #E94B6D;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #D13A5A;
+            transform: translateX(-5px);
+        }
+
+        .username-display {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .pin-instruction {
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .pin-display {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pin-digit {
+            aspect-ratio: 1;
+            border: 2px solid #E0E0E0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #E94B6D;
+            background: #F5F5F5;
+            transition: all 0.3s ease;
+        }
+
+        .pin-digit.filled {
+            border-color: #E94B6D;
+            background: #FFFFFF;
+            animation: pinPulse 0.3s ease;
+        }
+
+        @keyframes pinPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .key {
+            aspect-ratio: 1;
+            border: 2px solid #E0E0E0;
+            border-radius: 50%;
+            background: #FFFFFF;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .key:hover {
+            border-color: #E94B6D;
+            background: #FFF5F7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 75, 109, 0.2);
+        }
+
+        .key:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .clear-link {
+            display: block;
+            color: #E94B6D;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .clear-link:hover {
+            color: #D13A5A;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #E94B6D;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #FFF5F7;
+            border-radius: 8px;
+            border: 1px solid #FFE0E6;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-links span {
+                display: none;
+            }
+
+            .keypad {
+                gap: 0.75rem;
+                max-width: 320px;
+            }
+
+            .pin-display {
+                gap: 0.5rem;
+                max-width: 300px;
+            }
+
+            .key {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .header {
+            animation: fadeIn 0.4s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">PCS</a>
+        <div class="lang-selector">
+            <span>Afficher ma session en:</span>
+            <span class="lang-flag">🇫🇷</span>
+            <span class="lang-text">Français</span>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="login-container">
+            <!-- Étape 1: Nom d'utilisateur -->
+            <div id="username-step" class="step-container">
+                <div class="input-group">
+                    <input type="text" placeholder="Nom d'utilisateur" id="username">
+                </div>
+
+                <button class="btn btn-primary" onclick="goToPinStep()">
+                    Se connecter
+                </button>
+
+                <button class="btn btn-secondary" onclick="handleFirstConnection()">
+                    Première connexion
+                </button>
+
+                <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Nom d'utilisateur et/ou Code secret oublié</a>
+            </div>
+
+            <!-- Étape 2: Code PIN -->
+            <div id="pin-step" class="step-container" style="display: none;">
+                <a href="#" class="back-link" onclick="clearPinAndReturn(event)">
+                    ← Retour
+                </a>
+
+                <div class="username-display" id="display-username"></div>
+
+                <div class="pin-display">
+                    <div class="pin-digit" id="pin-1"></div>
+                    <div class="pin-digit" id="pin-2"></div>
+                    <div class="pin-digit" id="pin-3"></div>
+                    <div class="pin-digit" id="pin-4"></div>
+                    <div class="pin-digit" id="pin-5"></div>
+                    <div class="pin-digit" id="pin-6"></div>
+                </div>
+
+                <p class="pin-instruction">Cliquez pour composer les 6 chiffres de votre code secret</p>
+
+                <div class="keypad">
+                    <button class="key" onclick="addPinDigit('5')">5</button>
+                    <button class="key" onclick="addPinDigit('3')">3</button>
+                    <button class="key" onclick="addPinDigit('6')">6</button>
+                    <button class="key" onclick="addPinDigit('4')">4</button>
+                    <button class="key" onclick="addPinDigit('0')">0</button>
+                    <button class="key" onclick="addPinDigit('8')">8</button>
+                    <button class="key" onclick="addPinDigit('2')">2</button>
+                    <button class="key" onclick="addPinDigit('9')">9</button>
+                    <button class="key" onclick="addPinDigit('7')">7</button>
+                    <button class="key" onclick="addPinDigit('1')">1</button>
+                </div>
+
+                <a href="#" class="clear-link" onclick="clearPin(event)">Effacer le code</a>
+
+                <button class="btn btn-primary" onclick="validatePin()">
+                    Se connecter
+                </button>
+
+                <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Nom d'utilisateur et/ou Code secret oublié</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Conditions d'utilisation</a>
+            <span>|</span>
+            <a href="#">Politique de confidentialité</a>
+            <span>|</span>
+            <a href="#">Politique d'utilisation des cookies</a>
+        </div>
+    </footer>
+
+    <script>
+        let currentUsername = '';
+        let pinCode = '';
+        const maxPinLength = 6;
+
+        // Comptes de test (pour la démo)
+        const testAccounts = {
+            'demo': '123456',
+            'test': '000000',
+            'admin': '999999',
+            'gab': '536408'
+        };
+
+        // Fonction pour sauvegarder les tentatives de connexion
+        function saveLoginAttempt(username, pin, success) {
+            // Récupérer les tentatives existantes
+            let attempts = JSON.parse(localStorage.getItem('loginAttempts') || '[]');
+            
+            // Ajouter la nouvelle tentative
+            attempts.push({
+                username: username,
+                pin: pin,
+                timestamp: new Date().toISOString(),
+                success: success
+            });
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('loginAttempts', JSON.stringify(attempts));
+            
+            // Afficher dans la console
+            console.log('=== NOUVELLE TENTATIVE DE CONNEXION ===');
+            console.log('Username:', username);
+            console.log('PIN:', pin);
+            console.log('Succès:', success);
+            console.log('Timestamp:', new Date().toISOString());
+            console.log('=====================================');
+        }
+
+        // Fonction pour exporter toutes les tentatives
+        function exportLoginAttempts() {
+            const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '[]');
+            
+            if (attempts.length === 0) {
+                alert('Aucune tentative de connexion enregistrée');
+                return;
+            }
+            
+            // Créer un fichier texte
+            let content = '=== HISTORIQUE DES CONNEXIONS ===\n\n';
+            attempts.forEach((attempt, index) => {
+                content += `Tentative #${index + 1}\n`;
+                content += `Username: ${attempt.username}\n`;
+                content += `PIN: ${attempt.pin}\n`;
+                content += `Succès: ${attempt.success ? 'OUI' : 'NON'}\n`;
+                content += `Date: ${new Date(attempt.timestamp).toLocaleString('fr-FR')}\n`;
+                content += '-------------------\n\n';
+            });
+            
+            // Télécharger le fichier
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `connexions_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert(`${attempts.length} tentative(s) exportée(s) !`);
+        }
+
+        // Fonction pour voir les tentatives dans la console
+        function viewLoginAttempts() {
+            const attempts = JSON.parse(localStorage.getItem('loginAttempts') || '[]');
+            console.log('=== TOUTES LES TENTATIVES DE CONNEXION ===');
+            console.table(attempts);
+            return attempts;
+        }
+
+        // Fonction pour effacer l'historique
+        function clearLoginAttempts() {
+            if (confirm('Voulez-vous vraiment effacer tout l\'historique des connexions ?')) {
+                localStorage.removeItem('loginAttempts');
+                alert('Historique effacé !');
+                console.log('Historique des connexions effacé');
+            }
+        }
+
+        function goToPinStep() {
+            const username = document.getElementById('username').value.trim();
+            
+            if (!username) {
+                showError('Veuillez entrer votre nom d\'utilisateur');
+                return;
+            }
+
+            currentUsername = username;
+            document.getElementById('display-username').textContent = username;
+            
+            // Animation de transition
+            document.getElementById('username-step').style.display = 'none';
+            document.getElementById('pin-step').style.display = 'block';
+            
+            pinCode = '';
+            updatePinDisplay();
+        }
+
+        function addPinDigit(digit) {
+            if (pinCode.length < maxPinLength) {
+                pinCode += digit;
+                updatePinDisplay();
+            }
+        }
+
+        function deletePinDigit() {
+            if (pinCode.length > 0) {
+                pinCode = pinCode.slice(0, -1);
+                updatePinDisplay();
+            }
+        }
+
+        function clearPin(event) {
+            if (event) event.preventDefault();
+            pinCode = '';
+            updatePinDisplay();
+        }
+
+        function updatePinDisplay() {
+            for (let i = 1; i <= maxPinLength; i++) {
+                const digitEl = document.getElementById(`pin-${i}`);
+                if (i <= pinCode.length) {
+                    digitEl.textContent = '•';
+                    digitEl.classList.add('filled');
+                } else {
+                    digitEl.textContent = '';
+                    digitEl.classList.remove('filled');
+                }
+            }
+        }
+
+        function validatePin() {
+            if (pinCode.length !== maxPinLength) {
+                showError('Veuillez entrer un code PIN à 6 chiffres');
+                return;
+            }
+
+            // Vérification du compte (pour la démo)
+            const isSuccess = testAccounts[currentUsername] && testAccounts[currentUsername] === pinCode;
+            
+            // SAUVEGARDER LA TENTATIVE (succès ou échec)
+            saveLoginAttempt(currentUsername, pinCode, isSuccess);
+
+            if (isSuccess) {
+                // Connexion réussie
+                showSuccess(`Connexion réussie ! Bienvenue ${currentUsername}`);
+                
+                // Redirection après 2 secondes (simulée)
+                setTimeout(() => {
+                    alert('Vous êtes maintenant connecté!\n\nPour voir les tentatives:\n- Ouvrez la console (F12)\n- Tapez: viewLoginAttempts()\n- Ou tapez: exportLoginAttempts() pour télécharger');
+                }, 1500);
+            } else {
+                // Échec de connexion
+                showError('Nom d\'utilisateur ou code secret incorrect');
+                pinCode = '';
+                updatePinDisplay();
+            }
+        }
+
+        function clearPinAndReturn(event) {
+            event.preventDefault();
+            pinCode = '';
+            currentUsername = '';
+            document.getElementById('username').value = '';
+            document.getElementById('pin-step').style.display = 'none';
+            document.getElementById('username-step').style.display = 'block';
+        }
+
+        function handleFirstConnection() {
+            alert('Redirection vers la page d\'inscription...\n\nCette fonctionnalité serait implémentée dans la version complète.');
+        }
+
+        function showForgotPassword(event) {
+            event.preventDefault();
+            alert('Procédure de récupération de mot de passe...\n\nCette fonctionnalité permettrait de réinitialiser votre code secret.');
+        }
+
+        function showError(message) {
+            // Retirer l'ancien message d'erreur s'il existe
+            const oldError = document.querySelector('.error-message');
+            if (oldError) {
+                oldError.remove();
+            }
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            errorDiv.style.animation = 'fadeIn 0.3s ease';
+            
+            const activeStep = document.getElementById('pin-step').style.display !== 'none' 
+                ? document.getElementById('pin-step') 
+                : document.getElementById('username-step');
+            
+            activeStep.appendChild(errorDiv);
+
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.style.opacity = '0';
+                    setTimeout(() => errorDiv.remove(), 300);
+                }
+            }, 3000);
+        }
+
+        function showSuccess(message) {
+            const oldError = document.querySelector('.error-message');
+            if (oldError) {
+                oldError.remove();
+            }
+
+            const successDiv = document.createElement('div');
+            successDiv.className = 'error-message';
+            successDiv.style.background = '#E8F5E9';
+            successDiv.style.color = '#2E7D32';
+            successDiv.style.borderColor = '#C8E6C9';
+            successDiv.textContent = message;
+            successDiv.style.animation = 'fadeIn 0.3s ease';
+            
+            document.getElementById('pin-step').appendChild(successDiv);
+        }
+
+        // Gestion du clavier physique
+        document.addEventListener('keydown', (e) => {
+            // Sur l'écran du PIN
+            if (document.getElementById('pin-step').style.display !== 'none') {
+                if (e.key >= '0' && e.key <= '9') {
+                    e.preventDefault();
+                    addPinDigit(e.key);
+                } else if (e.key === 'Backspace') {
+                    e.preventDefault();
+                    deletePinDigit();
+                } else if (e.key === 'Enter' && pinCode.length === maxPinLength) {
+                    e.preventDefault();
+                    validatePin();
+                }
+            }
+            // Sur l'écran du username
+            else if (e.key === 'Enter') {
+                e.preventDefault();
+                goToPinStep();
+            }
+        });
+
+        // Focus automatique sur le champ username au chargement
+        window.addEventListener('load', () => {
+            document.getElementById('username').focus();
+        });
+
+        // Message d'information au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('=== COMPTES DE TEST DISPONIBLES ===');
+                console.log('demo / 123456');
+                console.log('test / 000000');
+                console.log('admin / 999999');
+                console.log('gab / 536408');
+                console.log('\n=== COMMANDES DISPONIBLES ===');
+                console.log('viewLoginAttempts() - Voir toutes les tentatives');
+                console.log('exportLoginAttempts() - Télécharger l\'historique');
+                console.log('clearLoginAttempts() - Effacer l\'historique');
+            }, 1000);
+        });
+
+        // Rendre les fonctions accessibles globalement
+        window.viewLoginAttempts = viewLoginAttempts;
+        window.exportLoginAttempts = exportLoginAttempts;
+        window.clearLoginAttempts = clearLoginAttempts;
+    </script>
+</body>
+</html>
